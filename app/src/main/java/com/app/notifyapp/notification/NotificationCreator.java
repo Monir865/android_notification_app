@@ -19,20 +19,18 @@ import com.app.notifyapp.R;
 
 public class NotificationCreator {
 
-    Context context;
-    NotificationManager notificationManager = null;
+    private Context context;
+    private NotificationManager notificationManager = null;
+    private Intent intent = null;
+    private Notification notification = null;
+    private Notification.Builder builder = null;
+
 
     public NotificationCreator(Context context){
         this.context = context;
         notificationManager = (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
     }
-
-
-    public void createNotification(int NOTIFICATION_ID, String CHANNEL_ID, int LARGE_ICON, int APP_ICON, String CONTENT_TEXT, String SUB_TEXT, Class<?> CLASS, int REQUEST_CODE, Notification.Style style) {
-        Intent intent = null;
-        Notification notification = null;
-        Notification.Builder builder = null;
-
+    public void createNotification(int NOTIFICATION_ID, String CHANNEL_ID, int LARGE_ICON, int APP_ICON, String CONTENT_TEXT, Class<?> CLASS, int REQUEST_CODE, Notification.Style style, long notificationTime) {
 
         intent = new Intent(context, CLASS);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -52,7 +50,7 @@ public class NotificationCreator {
 
         builder.setLargeIcon(getBitmapFromPNG(LARGE_ICON))
                 .setSmallIcon(APP_ICON)
-                .setSubText(SUB_TEXT)
+                .setSubText(getElapsedTime(notificationTime))
                 .setContentText(CONTENT_TEXT)
                 .setAutoCancel(true)
                 .setContentIntent(pendingIntent);
@@ -71,70 +69,11 @@ public class NotificationCreator {
 
     }
 
-    public void createNotification(int NOTIFICATION_ID, String CHANNEL_ID, int LARGE_ICON, int APP_ICON, String CONTENT_TEXT, String SUB_TEXT, Class<?> CLASS, int REQUEST_CODE){
-        Notification notification = null;
-
-        Intent intent = new Intent(context, CLASS);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-
-        int pendingIntentFlags = android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S
-                                    ?PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_MUTABLE
-                                    :PendingIntent.FLAG_UPDATE_CURRENT;
-
-        PendingIntent pendingIntent = PendingIntent.getActivity(context, REQUEST_CODE,intent, pendingIntentFlags);
-
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            notificationManager.createNotificationChannel(new NotificationChannel(CHANNEL_ID, "MESSAGE NOTIFICATION", NotificationManager.IMPORTANCE_HIGH));
-
-            notification = new Notification.Builder(context, CHANNEL_ID)
-                    .setLargeIcon(getBitmapFromPNG(LARGE_ICON))
-                    .setSmallIcon(APP_ICON)
-                    .setContentText(CONTENT_TEXT)
-                    .setSubText(SUB_TEXT)
-                    .setChannelId(CHANNEL_ID)
-                    .setContentIntent(pendingIntent)
-                    .setAutoCancel(true)
-                    .build();
-        }else{
-            notification = new Notification.Builder(context)
-                    .setLargeIcon(getBitmapFromPNG(LARGE_ICON))
-                    .setSmallIcon(APP_ICON)
-                    .setContentText(CONTENT_TEXT)
-                    .setSubText(SUB_TEXT)
-                    .setContentIntent(pendingIntent)
-                    .setAutoCancel(true)
-                    .build();
+    public void updateNotification(int NOTIFICATION_ID, long notificationTime) {
+        if (builder != null) {
+            builder.setSubText(getElapsedTime(notificationTime));
+            notificationManager.notify(NOTIFICATION_ID, builder.build());
         }
-
-        notificationManager.notify(NOTIFICATION_ID, notification);
-
-    }
-    public void createNotification(int NOTIFICATION_ID, String CHANNEL_ID, int LARGE_ICON, int APP_ICON, String CONTENT_TEXT, String SUB_TEXT){
-
-
-        Notification notification = null;
-
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            notificationManager.createNotificationChannel(new NotificationChannel(CHANNEL_ID, "MESSAGE NOTIFICATION", NotificationManager.IMPORTANCE_HIGH));
-
-            notification = new Notification.Builder(context)
-                    .setLargeIcon(getBitmapFromPNG(LARGE_ICON))
-                    .setSmallIcon(APP_ICON)
-                    .setContentText(CONTENT_TEXT)
-                    .setSubText(SUB_TEXT)
-                    .setChannelId(CHANNEL_ID)
-                    .build();
-        }else{
-            notification = new Notification.Builder(context)
-                    .setLargeIcon(getBitmapFromPNG(R.drawable.message_notification_large_icon))
-                    .setSmallIcon(R.drawable.app_icon)
-                    .setContentText(CONTENT_TEXT)
-                    .setSubText(SUB_TEXT)
-                    .build();
-        }
-
-        notificationManager.notify(NOTIFICATION_ID, notification);
-
     }
     public Bitmap getBitmapFromPNG(int image_id) {
         Drawable drawable = ResourcesCompat.getDrawable(context.getResources(), image_id, null);
@@ -143,6 +82,29 @@ public class NotificationCreator {
         }
         return null;
     }
+    public String getElapsedTime(long notificationTime){
 
+        long currentTime = System.currentTimeMillis();
+        long elapsedMillis = currentTime-notificationTime;
+
+        long minutes = elapsedMillis / (1000*60);
+
+        if(minutes < 1) {
+            return "Just Now";
+
+        } else if (minutes < 60) {
+            return minutes+"m ago";
+
+        }else {
+            long hours = minutes / 60;
+
+            if(hours < 24){
+                return hours+"h ago";
+            }else {
+                long day = hours / 24;
+                return day+"d ago";
+            }
+        }
+    }
 
 }
