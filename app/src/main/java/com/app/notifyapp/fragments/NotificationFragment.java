@@ -10,9 +10,9 @@ import android.view.ViewGroup;
 
 import com.app.notifyapp.R;
 
-public class TopFragment extends Fragment {
+public class NotificationFragment extends Fragment {
 
-    public TopFragment() {
+    public NotificationFragment() {
 
     }
 
@@ -21,7 +21,7 @@ public class TopFragment extends Fragment {
 
 
 
-        return inflater.inflate(R.layout.fragment_top, container, false);
+        return inflater.inflate(R.layout.fragment_chat, container, false);
     }
 
 }
