@@ -10,7 +10,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="250dp"
+        android:layout_height="200dp"
         android:orientation="vertical"
         android:gravity="center"
         android:background="@drawable/profile_header_background"
@@ -20,7 +20,8 @@
             android:layout_width="120dp"
             android:layout_height="120dp"
             android:src="@drawable/default_profile_picture"
-            android:contentDescription="Profile Image"/>
+            android:contentDescription="Profile Image"
+            android:id="@+id/profile_profile_photo"/>
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -40,7 +41,8 @@
                 android:layout_height="wrap_content"
                 android:text="Status"
                 android:textColor="#FFF"
-                android:textStyle="bold"/>
+                android:textStyle="bold"
+                android:id="@+id/profile_status"/>
 
         </LinearLayout>
 
@@ -65,7 +67,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Dummy Name"
-            style="@style/ContentText"/>
+            style="@style/ContentText"
+            android:id="@+id/profile_full_name"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -76,7 +79,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="dummy@gmail.com"
-            style="@style/ContentText"/>
+            style="@style/ContentText"
+            android:id="@+id/profile_email"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -87,7 +91,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="+881100112211"
-            style="@style/ContentText"/>
+            style="@style/ContentText"
+            android:id="@+id/profile_contact"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -99,7 +104,8 @@
             android:layout_height="wrap_content"
             android:text="I am a android application developer. I have experiance working on firebase application also working on AI project."
             android:textStyle="bold"
-            style="@style/BioText"/>
+            style="@style/BioText"
+            android:id="@+id/profile_bio"/>
 
     </LinearLayout>
 
@@ -107,14 +113,11 @@
     <androidx.appcompat.widget.AppCompatButton
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:background="@drawable/active_icon"
         android:text="+"
-        android:textSize="30sp"
-        android:textColor="#FFF"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_margin="20dp"
-        />
+        android:background="@drawable/active_icon"
+        style="@style/AddUpdateBtn"
+        android:id="@+id/profile_add_update_btn"/>
+
 
 
 </RelativeLayout>

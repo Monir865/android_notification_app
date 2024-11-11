@@ -66,7 +66,7 @@ public class BottomNavigationViewApp extends AppCompatActivity {
                 } else if (id == R.id.bot_nav_app_menu_account) {
                     loadFragment(new AccountFragment(), false);
                 } else if (id == R.id.bot_nav_app_menu_profile) {
-                    loadFragment(new ProfileFragment(), false);
+                    loadFragment(ProfileFragment.getInstance(1), false);
                 } else {
                     loadFragment(new SettingFragment(), false);
                 }
@@ -81,15 +81,17 @@ public class BottomNavigationViewApp extends AppCompatActivity {
 
 
 
-
-
-
-
     }
 
     private void loadFragment(Fragment fragment, boolean flag) {
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
+
+        /*
+        Bundle dataBundle = new Bundle();
+        dataBundle.putInt("user_id", 3);
+        fragment.setArguments(dataBundle);
+        */
 
         if (flag) {
             ft.add(R.id.frame_layout, fragment);

@@ -19,6 +19,29 @@
         <item name="android:textSize">15sp</item>
     </style>
     
-    
-    
+    <style name="AddUpdateBtn">
+        <item name="android:textSize">30sp</item>
+        <item name="android:textColor">#FFF</item>
+        <item name="android:layout_alignParentBottom">true</item>
+        <item name="android:layout_alignParentEnd">true</item>
+        <item name="android:layout_margin">20dp</item>
+    </style>
+
+
+    <style name="FormTextStyle">
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:paddingBottom">4dp</item>
+    </style>
+
+    <style name="FormEditTextStyle">
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textColorHint">#B3FFFFFF</item> <!-- Light white for hint -->
+        <item name="android:backgroundTint">#FFFFFF</item> <!-- White underline for EditText -->
+        <item name="android:padding">8dp</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+
+
 </resources>
